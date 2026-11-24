@@ -48,12 +48,57 @@ function doPost(e) {
     } else {
       sh.appendRow(row);
     }
+    if (d.status === 'finished') CacheService.getScriptCache().remove('board'); // leaderboard refreshes right away
     return json_({ ok: true });
   } catch (err) {
     return json_({ ok: false, error: String(err) });
   } finally {
     lock.releaseLock();
   }
+}
+
+/**
+ * Project leaderboard (GET). Returns totals only — no player names or contacts ever leave the sheet.
+ * Points: champion 10 · super like 5 · battle win 3 · like 2. Cached for 60 s.
+ */
+function doGet() {
+  const cache = CacheService.getScriptCache();
+  const hit = cache.get('board');
+  if (hit) return ContentService.createTextOutput(hit).setMimeType(ContentService.MimeType.JSON);
+
+  const sh = getSheet_();
+  const last = sh.getLastRow();
+  const stats = {};
+  let games = 0;
+  const bump = (name, key) => {
+    name = String(name || '').replace(/^'/, '').trim();
+    if (!name) return;
+    const s = stats[name] || (stats[name] = { name: name, champion: 0, superlike: 0, wins: 0, like: 0, battles: 0 });
+    s[key]++;
+  };
+  if (last > 1) {
+    const rows = sh.getRange(2, 1, last - 1, HEADERS.length).getValues();
+    const col = h => HEADERS.indexOf(h);
+    rows.forEach(r => {
+      if (String(r[col('Status')]) === 'test' || /zz-test/i.test(String(r[col('Name')]))) return; // skip test rows
+      games++;
+      bump(r[col('Champion')], 'champion');
+      String(r[col('Super liked')] || '').split(',').forEach(n => bump(n, 'superlike'));
+      String(r[col('Liked')] || '').split(',').forEach(n => bump(n, 'like'));
+      String(r[col('Picks')] || '').split('\n').forEach(line => {
+        const m = line.match(/:\s*(.+?)\s+vs\s+(.+?)\s+→\s+(.+)$/);
+        if (m) { bump(m[1], 'battles'); bump(m[2], 'battles'); bump(m[3], 'wins'); }
+      });
+    });
+  }
+  const projects = Object.keys(stats).map(k => {
+    const s = stats[k];
+    s.points = s.champion * 10 + s.superlike * 5 + s.wins * 3 + s.like * 2;
+    return s;
+  }).sort((a, b) => b.points - a.points);
+  const out = JSON.stringify({ ok: true, games: games, updated: new Date().toISOString(), projects: projects });
+  cache.put('board', out, 60);
+  return ContentService.createTextOutput(out).setMimeType(ContentService.MimeType.JSON);
 }
 
 function getSheet_() {

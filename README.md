@@ -58,3 +58,9 @@ Point the QR at the public link, not `?kiosk=1` (kiosk mode is only for the boot
 `audio/music.m4a` is **"Level 3" from the Retro Game Music Pack by Juhani Junkala**, released as **CC0 (public domain)** on OpenGameArt: https://opengameart.org/content/5-chiptunes-action. It's free for commercial use and needs no credit (credited here anyway).
 `audio/alt-level-1.m4a` and `audio/alt-level-2.m4a` are Levels 1 and 2 from the same pack. To preview one, add `?music=1` or `?music=2` to the game link. To make one the default, rename it to `music.m4a`.
 The tracks were converted from WAV to AAC 96 kbps (about 0.9 MB each). The game loops the music seamlessly, speeds it up for the Final, and dips it under the drumrolls. If the file is missing, a built-in generated loop plays instead.
+
+## Project leaderboard
+The start screen has a 🏆 **Project leaderboard** button, and every results screen shows the top 3 projects. Totals come from all games in the sheet.
+Points: 👑 champion 10 · ⭐ super like 5 · ⚔️ battle win 3 · 💚 like 2. Rows with status `test` or a name containing `zz-test` are skipped.
+The sheet script sends back **totals only**; player names and contacts never leave the sheet. Totals are cached for 60 seconds and refresh as soon as a game finishes.
+After changing `google-sheet-script.gs`, redeploy it as a **new version** (Deploy → Manage deployments → ✏️ → Version: New version → Deploy). That keeps the same link.

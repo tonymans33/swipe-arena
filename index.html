@@ -381,6 +381,32 @@ html[dir=rtl] .bdg{padding:5px 5px 5px 14px}
 .lrow .pts{font-weight:800;color:#5a3fd6;font-variant-numeric:tabular-nums}
 .todaybest{display:inline-block;margin-top:10px;padding:2px 14px;border-radius:99px;background:var(--yellow);color:var(--ink);font-weight:800;font-size:14px;box-shadow:0 3px 0 var(--yellow-d)}
 .todaybest[hidden]{display:none}
+/* project leaderboard */
+.boardbtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:54px;margin-top:22px;font-size:19px;text-transform:uppercase;--c:#fff;--cd:var(--lilac);color:var(--ink)}
+.boardbtn[hidden]{display:none}
+html[lang=ar] .boardbtn{text-transform:none}
+.podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;align-items:end;gap:10px;margin:34px 0 8px}
+.pod{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:#fff;min-width:0}
+.pod .sw{width:62px;height:62px;border-radius:18px;font-size:30px;box-shadow:0 4px 0 rgba(0,0,0,.25),inset 0 0 0 3px #fff}
+.pod.p1 .sw{width:78px;height:78px;font-size:38px}
+.pod .crownp{font-size:30px;line-height:1;margin-bottom:2px;animation:crown 1.6s ease-in-out infinite;display:inline-block}
+.pod b{font-size:15px;font-weight:800;margin-top:6px;text-transform:uppercase;text-align:center;line-height:1.1;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html[lang=ar] .pod b{text-transform:none}
+.pod .pp{font-size:14px;font-weight:800;color:var(--yellow)}
+.pod .stepb{width:100%;margin-top:8px;border-radius:14px 14px 6px 6px;display:grid;place-items:center;font-size:30px;font-weight:800;color:var(--ink);box-shadow:0 6px 0 rgba(0,0,0,.25);transform-origin:bottom;animation:rise .7s cubic-bezier(.2,1.3,.4,1) both}
+.pod.p1 .stepb{height:112px;background:linear-gradient(180deg,#ffe79a,var(--yellow));animation-delay:.35s}
+.pod.p2 .stepb{height:82px;background:linear-gradient(180deg,#f1f3f7,#c9ced8);animation-delay:.2s}
+.pod.p3 .stepb{height:62px;background:linear-gradient(180deg,#f6c99b,#e3a066);animation-delay:.05s}
+@keyframes rise{from{transform:scaleY(0)}}
+.brow .bi{flex:1;min-width:0}
+.brow .bi b{display:block;font-size:17px}
+.brow .chips{font-size:12.5px;font-weight:700;color:#8a7fb0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brow .bar{display:block;height:6px;border-radius:99px;background:#ece6ff;margin-top:5px;position:relative;overflow:hidden}
+.brow .bar::after{content:'';position:absolute;top:0;bottom:0;inset-inline-start:0;width:var(--w);border-radius:inherit;background:linear-gradient(90deg,var(--pink),var(--orange))}
+.brow .pts{font-size:19px}
+.brow .pts small{display:block;font-size:11px;font-weight:700;color:#8a7fb0;text-align:center}
+.bkey{margin-top:16px;font-size:13px;font-weight:700;color:rgba(255,255,255,.7)}
+.bnote{padding:22px;border-radius:22px;background:rgba(10,3,40,.45);font-weight:700;margin-top:26px}
 #confetti{position:fixed;inset:0;width:100%;height:100%;z-index:50;pointer-events:none}
 @media (max-height:740px){.peek{display:none}.title .t1{font-size:58px}.title .t2{font-size:66px}.panel{margin-top:24px}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}}
@@ -426,6 +452,7 @@ html[dir=rtl] .bdg{padding:5px 5px 5px 14px}
         </div>
         <button class="play b3d" type="submit">▶ <span data-i18n="start"></span></button>
       </form>
+      <button type="button" class="b3d boardbtn" id="boardBtn" data-i18n="boardBtn" hidden></button>
       <p class="fine" data-i18n="privacy"></p>
     </div>
   </div>
@@ -460,6 +487,16 @@ html[dir=rtl] .bdg{padding:5px 5px 5px 14px}
   <div class="wrap qwrap"><span>⚡</span><div class="qbar"><i></i></div></div>
   <div class="round"><b id="roundName">&nbsp;</b><span data-i18n="whichWins"></span></div>
   <div class="arena-wrap"><div class="arena" id="arena"></div></div>
+</section>
+
+<!-- ============ PROJECT LEADERBOARD ============ -->
+<section class="screen" id="board">
+  <div class="wrap hud">
+    <button class="hbtn b3d" id="boardClose" aria-label="Back">✕</button>
+    <div style="flex:1"></div>
+    <button class="hbtn b3d" id="boardRefresh" aria-label="Refresh">↻</button>
+  </div>
+  <div class="scroll"><div class="wrap results" id="boardBody"></div></div>
 </section>
 
 <!-- ============ RESULTS ============ -->
@@ -535,6 +572,9 @@ const T = {
     rank1:'🐣 App Rookie', rank2:'🧭 App Explorer', rank3:'🚀 App Pro', rank4:'🏆 App Legend',
     share:'📤 Share my result', shareFav:'My pick in Swipe Arena by Websight: {x} 🏆 Score {n}. Can you beat it?', shareNo:'I scored {n} in Swipe Arena by Websight. Can you beat it?',
     topToday:"Today's top players", todayBest:"Today's best",
+    boardBtn:'🏆 Project leaderboard', boardTitle:'Top Projects', boardSub:'Most loved by all players · {n} games',
+    boardLoading:'Loading the leaderboard…', boardEmpty:'No games yet. Be the first!', boardError:"Couldn't load the leaderboard. Check your connection and try again.",
+    boardKey:'👑 champion 10 · ⭐ super like 5 · ⚔️ battle win 3 · 💚 like 2', boardSeeAll:'🏆 See full leaderboard', boardEveryone:'Top projects · everyone', pts:'pts',
     tapToView:'Tap a project to see it on our website', viewOn:'See {x} on websight.kw', madeBy:'Made by Websight',
     tag_web:'Website', tag_app:'Mobile App', tag_system:'Custom System', tag_ai:'AI', tag_shop:'E-commerce' },
   ar:{ langBtn:'English', title1:'ساحة', title2:'السحب', byline:'من ويب سايت · الكويت', player1:'اللاعب ١',
@@ -556,6 +596,9 @@ const T = {
     rank1:'🐣 مبتدئ', rank2:'🧭 مستكشف', rank3:'🚀 محترف', rank4:'🏆 أسطورة',
     share:'📤 شارك نتيجتك', shareFav:'اختياري في ساحة السحب من ويب سايت: {x} 🏆 نقاطي {n}. تقدر تتفوق علي؟', shareNo:'جبت {n} نقطة في ساحة السحب من ويب سايت. تقدر تتفوق علي؟',
     topToday:'أفضل لاعبي اليوم', todayBest:'أفضل نتيجة اليوم',
+    boardBtn:'🏆 ترتيب المشاريع', boardTitle:'أفضل المشاريع', boardSub:'الأكثر حبًا من جميع اللاعبين · {n} لعبة',
+    boardLoading:'جارٍ تحميل الترتيب…', boardEmpty:'لا توجد ألعاب بعد. كن الأول!', boardError:'تعذّر تحميل الترتيب. تحقّق من الاتصال وحاول مرة أخرى.',
+    boardKey:'👑 بطل 10 · ⭐ سوبر لايك 5 · ⚔️ فوز 3 · 💚 إعجاب 2', boardSeeAll:'🏆 عرض الترتيب الكامل', boardEveryone:'أفضل المشاريع · الجميع', pts:'نقطة',
     tapToView:'اضغط على أي مشروع لتشاهده على موقعنا', viewOn:'شاهد {x} على موقعنا', madeBy:'من تطوير ويب سايت',
     tag_web:'موقع إلكتروني', tag_app:'تطبيق جوال', tag_system:'نظام مخصص', tag_ai:'ذكاء اصطناعي', tag_shop:'متجر إلكتروني' },
 };
@@ -1198,7 +1241,7 @@ function finishSwipe(){
   S.shareText = liked[0] ? t('shareFav', {x: L(liked[0].name), n: S.score.toLocaleString('en')}) : t('shareNo', {n: S.score.toLocaleString('en')});
   let h = `<div class="ribbon ${liked.length ? '' : 'pink'}">${esc(liked.length ? t('picksRibbon') : t('noneRibbon'))}</div>
     <div class="bigstat">💚 ${liked.length}<small> / ${deck.length}</small></div>
-    <p class="lead">${esc(t('likedTitle'))}</p>` + scoreCard() + badgesBlock() + topBlock();
+    <p class="lead">${esc(t('likedTitle'))}</p>` + scoreCard() + badgesBlock() + topBlock() + boardMiniSlot();
   if (liked.length) {
     h += `<div class="sec"><h4>${esc(t('likesTitle'))}</h4><p class="tapnote">👆 ${esc(t('tapToView'))}</p><div class="grid">${
       liked.map((p,i) => { const url = projUrl(p), tag = url ? 'a' : 'div';
@@ -1295,7 +1338,7 @@ function showChampion(champ){
   let h = `<div class="ribbon">🏆 ${esc(t('champion'))}</div>
     <div class="champ"><div class="glow"></div><span class="crown">👑</span><div class="card" style="${cardVars(champ)}">${cardInner(champ)}</div></div>`
     + (projUrl(champ) ? `<a class="b3d viewbtn" ${linkAttrs(projUrl(champ))}>🔗 ${esc(t('viewOn', {x: L(champ.name)}))}</a>` : '')
-    + scoreCard() + badgesBlock() + topBlock()
+    + scoreCard() + badgesBlock() + topBlock() + boardMiniSlot()
     + `<div class="sec"><h4>${esc(t('rankingTitle'))}</h4><p class="tapnote">👆 ${esc(t('tapToView'))}</p><div class="lb">${
       S.ranking.map((id, i) => { const p = P(id), url = projUrl(p), tag = url ? 'a' : 'div';
         return `<${tag} class="lrow" ${url ? linkAttrs(url) : ''} style="animation-delay:${.6 + i * .07}s">
@@ -1405,9 +1448,11 @@ function showResults(html, party){
     if (act === 'battle') return startBattle();
     if (act === 'swipe') return startSwipe();
     if (act === 'battleLikes') return startBattle(S.swipes.filter(s => s.liked).map(s => s.id));
+    if (act === 'board') return openBoard();
     if (act === 'share') return navigator.share({ title: 'Swipe Arena · Websight', text: S.shareText, url: location.href.split(/[?#]/)[0] }).catch(() => {});
   });
   show('results');
+  fillBoardMini();
   const sn = $('#scoreNum'); if (sn) setTimeout(() => countUp(sn, S.score), 400);
   if (party) { setTimeout(() => { Confetti.burst(); Sfx.fanfare(); }, 250); vib([30,60,30]); }
   if (KIOSK) {
@@ -1426,6 +1471,85 @@ function goHome(){
   show('welcome');
 }
 $$('[data-quit]').forEach(b => b.onclick = () => { Sfx.tap(); save('quit'); goHome(); });
+
+/* =====================================================================
+   PROJECT LEADERBOARD — totals from the Google Sheet (doGet), no personal data
+   ===================================================================== */
+const Board = {
+  data: null, at: 0, pending: null,
+  load(force){
+    if (!CONFIG.SHEET_URL) return Promise.resolve(null);
+    if (!force && this.data && Date.now() - this.at < 30000) return Promise.resolve(this.data);
+    if (this.pending) return this.pending;
+    this.pending = fetch(CONFIG.SHEET_URL + '?board=1', { cache: 'no-store' })
+      .then(r => r.json())
+      .then(j => { if (j && j.ok) { this.data = j; this.at = Date.now(); } return this.data; })
+      .catch(() => this.data)
+      .finally(() => { this.pending = null; });
+    return this.pending;
+  },
+  /* every project, with its totals (0 if nobody picked it yet), best first */
+  rows(){
+    const by = {};
+    (this.data?.projects || []).forEach(x => { by[String(x.name).toLowerCase()] = x; });
+    return PROJECTS.map(p => {
+      const x = by[String(L(p.name)).toLowerCase()] || by[String(p.name.en || p.name).toLowerCase()] || {};
+      return { p, points: x.points || 0, champion: x.champion || 0, superlike: x.superlike || 0, wins: x.wins || 0, like: x.like || 0 };
+    }).sort((a, b) => b.points - a.points || b.champion - a.champion || b.wins - a.wins);
+  },
+};
+const chipsOf = r => `👑 ${r.champion} · ⭐ ${r.superlike} · ⚔️ ${r.wins} · 💚 ${r.like}`;
+function boardRowHTML(r, i, max){
+  const url = projUrl(r.p), tag = url ? 'a' : 'div';
+  return `<${tag} class="lrow brow" ${url ? linkAttrs(url) : ''} style="animation-delay:${.15 + i * .06}s">
+    <span class="n">${i + 1}</span>${swatch(r.p)}
+    <div class="bi"><b>${esc(L(r.p.name))}</b><div class="chips">${chipsOf(r)}</div><i class="bar" style="--w:${max ? Math.round(r.points / max * 100) : 0}%"></i></div>
+    <span class="pts">${r.points.toLocaleString('en')}<small>${esc(t('pts'))}</small></span></${tag}>`;
+}
+function renderBoard(state){
+  const body = $('#boardBody');
+  let h = `<div class="ribbon">🏆 ${esc(t('boardTitle'))}</div>`;
+  if (state === 'loading') { body.innerHTML = h + `<div class="bnote">⏳ ${esc(t('boardLoading'))}</div>`; return; }
+  if (!Board.data) { body.innerHTML = h + `<div class="bnote">⚠️ ${esc(t('boardError'))}</div>`; return; }
+  const rows = Board.rows(), max = rows[0]?.points || 0;
+  h += `<p class="lead">${esc(t('boardSub', {n: (Board.data.games || 0).toLocaleString('en')}))}</p>`;
+  if (!max) { body.innerHTML = h + `<div class="bnote">🎮 ${esc(t('boardEmpty'))}</div>`; return; }
+  const pod = (r, k) => { const url = projUrl(r.p), tag = url ? 'a' : 'div';
+    return `<${tag} class="pod p${k}" ${url ? linkAttrs(url) : ''}>${k === 1 ? '<span class="crownp">👑</span>' : ''}${swatch(r.p)}<b>${esc(L(r.p.name))}</b><span class="pp">${r.points.toLocaleString('en')} ${esc(t('pts'))}</span><span class="stepb">${k}</span></${tag}>`; };
+  h += `<div class="podium">${rows[1] ? pod(rows[1], 2) : '<i></i>'}${pod(rows[0], 1)}${rows[2] ? pod(rows[2], 3) : '<i></i>'}</div>`;
+  h += `<div class="sec"><p class="tapnote">👆 ${esc(t('tapToView'))}</p><div class="lb">${rows.map((r, i) => boardRowHTML(r, i, max)).join('')}</div></div>`;
+  h += `<p class="bkey">${esc(t('boardKey'))}</p>`;
+  body.innerHTML = h;
+  body.parentElement.scrollTop = 0;
+}
+let boardBack = 'welcome';
+function openBoard(){
+  boardBack = current === 'results' ? 'results' : 'welcome';
+  show('board'); Sfx.tap();
+  renderBoard(Board.data ? 'ready' : 'loading');
+  Board.load(true).then(() => { if (current === 'board') renderBoard('ready'); });
+}
+$('#boardClose').onclick = () => { Sfx.tap(); show(boardBack); };
+$('#boardRefresh').onclick = () => { Sfx.tap(); renderBoard('loading'); Board.load(true).then(() => current === 'board' && renderBoard('ready')); };
+$('#boardBtn').onclick = openBoard;
+
+/* results screens: top 3 projects from everyone + link to the full board */
+function boardMiniSlot(){
+  if (!CONFIG.SHEET_URL) return '';
+  return `<div class="sec"><h4>🏆 ${esc(t('boardEveryone'))}</h4><div class="lb" id="boardMini"></div>
+    <div class="actions" style="margin-top:14px"><button class="b3d g" data-act="board">${esc(t('boardSeeAll'))}</button></div></div>`;
+}
+function fillBoardMini(){
+  const box = $('#boardMini'); if (!box) return;
+  box.innerHTML = `<div class="bnote" style="margin:0">⏳ ${esc(t('boardLoading'))}</div>`;
+  // give the sheet a moment to record this game, then fetch fresh totals
+  setTimeout(() => Board.load(true).then(() => {
+    const el = $('#boardMini'); if (!el) return;
+    if (!Board.data) { el.innerHTML = `<div class="bnote" style="margin:0">⚠️ ${esc(t('boardError'))}</div>`; return; }
+    const rows = Board.rows(), max = rows[0]?.points || 0;
+    el.innerHTML = max ? rows.slice(0, 3).map((r, i) => boardRowHTML(r, i, max)).join('') : `<div class="bnote" style="margin:0">🎮 ${esc(t('boardEmpty'))}</div>`;
+  }), 1500);
+}
 
 /* Kiosk: reset an abandoned game */
 let idleT = 0;
@@ -1539,6 +1663,8 @@ setupWelcome();
 applyI18n();
 renderTodayBest();
 syncSoundIcons();
+$('#boardBtn').hidden = !CONFIG.SHEET_URL;
+Board.load();
 flush();
 bumpIdle();
 </script>
