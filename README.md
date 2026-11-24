@@ -37,7 +37,7 @@ On the iPad, open the kiosk link, use **Share → Add to Home Screen**, then tur
 Each game becomes one row in a **Plays** tab, and the row updates as the player goes: `playing` → `finished`, `quit`, `left` or `abandoned`. Rows are saved even if the player stops halfway. When the device is offline, results are queued and sent later.
 
 ## Projects
-The 8 cards are real Websight case studies: AQL, KIB Mubader, ILG, Riders, LIVE, Al Muheet, Wasfat and Arzaq. Edit `PROJECTS` in `index.html`:
+The 10 cards are real Websight case studies: AQL, KIB Mubader, ILG, Riders, LIVE, Al Muheet, Wasfat, Arzaq, Wefaq and LumenPro. Edit `PROJECTS` in `index.html`:
 - `fit: 'contain'` + `bg`: show a very wide screenshot whole (not cropped) on its background colour; `pos` sets the crop for the small thumbnail (LIVE uses this).
 - `logo`: shown on a white panel when there is no `image` (LIVE uses its logo until a screenshot is added).
 - `image`: a websight.kw path such as `/assets/work/riders-cover.webp` (loaded resized, about 30 KB each, through the site's image optimizer), a full URL, or a local file like `img/x.jpg`. If an image fails to load, the card shows generated art instead. Portrait phone screenshots: add `phone:true` and the image is shown inside a phone frame (LIVE uses `img/live.jpg`).
@@ -45,7 +45,7 @@ The 8 cards are real Websight case studies: AQL, KIB Mubader, ILG, Riders, LIVE,
 - `tags`: any of `web`, `app`, `system`, `ai`, `shop`. They show as icon stickers.
 - `slug`: the case-study page, websight.kw/<lang>/work/<slug>. Results screens link there.
 
-Battle works with any number of projects; odd counts get a bye.
+Battle works with any number of projects. Above 8 (or any power of two), a short **Play-in** round runs first, then a clean Quarter-final.
 
 ## Other settings (`CONFIG`)
 `REQUIRE_CONTACT: true` makes a phone number or email mandatory. You can also change the WhatsApp number, the site URL and the kiosk timers there. The Websight logo is built into the page, so it shows even when offline.

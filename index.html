@@ -546,12 +546,18 @@ const PROJECTS = [
   { id:'muheet', slug:'al-muheet-pools', name:'Al Muheet', tags:['web','shop'], icon:'🏊', colors:['#0ea5e9','#2de2e6'], image:'img/muheet.jpg', pos:'40% 60%',
     industry:{ en:'Pools', ar:'مسابح' },
     desc:{ en:'Pool builders in Kuwait and Saudi Arabia since 1984 — website and online store.', ar:'رواد بناء المسابح في الكويت والسعودية منذ 1984 — موقع ومتجر إلكتروني.' } },
-  { id:'wasfat', slug:'wasfat', name:'Wasfat', tags:['app'], icon:'🍳', colors:['#e11d48','#fb923c'], image:'/assets/work/wasfat-cover.webp',
+  { id:'wasfat', slug:'wasfat', name:'Wasfat', tags:['app','web'], icon:'🍳', colors:['#e11d48','#fb923c'], image:'/assets/work/wasfat-hero.png', pos:'75% 50%',
     industry:{ en:'Food & recipes', ar:'طبخ ووصفات' },
-    desc:{ en:'Culinary social app — thousands of recipes and short cooking videos.', ar:'تطبيق اجتماعي للطبخ — آلاف الوصفات وفيديوهات طبخ قصيرة.' } },
+    desc:{ en:'Social recipe platform — iOS & Android apps plus marketing website.', ar:'منصة وصفات اجتماعية — تطبيقات iOS وAndroid وموقع تسويقي.' } },
   { id:'arzaq', slug:'arzaq', name:'Arzaq', tags:['web'], icon:'🏢', colors:['#0f766e','#5eead4'], image:'/assets/work/arzaq-cover.webp',
     industry:{ en:'Real estate', ar:'عقارات' },
     desc:{ en:'Kuwait real-estate company — sales, rentals and property management.', ar:'شركة عقارية كويتية — بيع وإيجار وإدارة أملاك.' } },
+  { id:'wefaq', slug:'wefaq-law', name:'Wefaq', tags:['web'], icon:'⚖️', colors:['#9f1239','#f59e0b'], image:'/assets/work/wefaq-home.png', pos:'25% 40%',
+    industry:{ en:'Law firm', ar:'محاماة' },
+    desc:{ en:'Comprehensive legal partner — advisory, litigation, and cross-border transactions.', ar:'شريك قانوني متكامل — استشارات وتقاضٍ ومعاملات عابرة للحدود.' } },
+  { id:'lumenpro', slug:'lumen-pro', name:'LumenPro', tags:['ai','web','app'], icon:'📸', colors:['#7c3aed','#f472b6'], image:'img/lumenpro.jpg', fit:'contain', bg:'#0e0d12', pos:'78% 45%',
+    industry:{ en:'AI creative', ar:'إبداع بالذكاء الاصطناعي' },
+    desc:{ en:'Arabic-first AI creative platform — product photography, video, and 32+ tools for merchants across the Gulf.', ar:'منصة إبداعية بالذكاء الاصطناعي بالعربية أولاً — تصوير منتجات وفيديو وأكثر من 32 أداة للتجار في الخليج.' } },
 ];
 
 const T = {
@@ -561,7 +567,7 @@ const T = {
     start:'Play', privacy:"We'll only use your details to follow up about your picks.",
     errName:'Enter your name to play!', errContact:'Add a phone number or an email', errPhone:'That phone number looks too short', errEmail:"That email doesn't look right",
     like:'Like!', nope:'Nope', hintSwipe:'👈 Pass · ⭐ Super ↑ · Like 👉', whichWins:'Tap your winner!', go:'Go!',
-    final:'Final', semi:'Semi-final', quarter:'Quarter-final', roundOf:'Round of {n}', matches:'{n} matches', match1:'1 match',
+    final:'Final', playIn:'Play-in', semi:'Semi-final', quarter:'Quarter-final', roundOf:'Round of {n}', matches:'{n} matches', match1:'1 match',
     quick:'Quick!', streak:'Streak', win:'Win!',
     champion:'Champion!', rankingTitle:'Your ranking', likedTitle:'apps you liked', likesTitle:'Your likes',
     picksRibbon:'Your picks', noneRibbon:'Tough crowd!', likedNone:'Nothing caught your eye this time. Try Battle mode!',
@@ -585,7 +591,7 @@ const T = {
     start:'العب', privacy:'نستخدم بياناتك فقط للتواصل معك بخصوص اختياراتك.',
     errName:'اكتب اسمك لتبدأ!', errContact:'أضف رقم هاتف أو بريدًا إلكترونيًا', errPhone:'رقم الهاتف يبدو قصيرًا', errEmail:'البريد الإلكتروني غير صحيح',
     like:'أعجبني', nope:'لا', hintSwipe:'👈 تخطٍّ · ⭐ سوبر ↑ · إعجاب 👉', whichWins:'اضغط على الفائز!', go:'انطلق!',
-    final:'النهائي', semi:'نصف النهائي', quarter:'ربع النهائي', roundOf:'دور الـ{n}', matches:'{n} مباريات', match1:'مباراة واحدة',
+    final:'النهائي', playIn:'التصفيات التمهيدية', semi:'نصف النهائي', quarter:'ربع النهائي', roundOf:'دور الـ{n}', matches:'{n} مباريات', match1:'مباراة واحدة',
     quick:'سريع!', streak:'سلسلة', win:'فاز!',
     champion:'البطل!', rankingTitle:'ترتيبك', likedTitle:'تطبيقات أعجبتك', likesTitle:'إعجاباتك',
     picksRibbon:'اختياراتك', noneRibbon:'صعب الإرضاء!', likedNone:'لم يعجبك شيء هذه المرة. جرّب وضع التحدي!',
@@ -1270,7 +1276,9 @@ function startBattle(ids){
   Music.tempo(124);
   S.modes.push('battle'); S.picks = []; S.ranking = []; S.champion = null; S.streak = 0;
   const list = shuffle(ids ? PROJECTS.filter(p => ids.includes(p.id)) : PROJECTS);
-  B = { round:list, next:[], i:0, roundNo:1, out:[], played:0, total:list.length - 1, banner:0 };
+  const pow = 2 ** Math.floor(Math.log2(Math.max(1, list.length))), extra = list.length - pow;
+  B = { round: extra ? list.slice(0, extra * 2) : list, next: extra ? list.slice(extra * 2) : [], playIn: extra > 0,
+        i:0, roundNo:1, out:[], played:0, total:list.length - 1, banner:0 };
   busy = true;
   makePips('#battlePips', B.total);
   $('#arena').innerHTML = ''; $('#roundName').innerHTML = '&nbsp;';
@@ -1279,6 +1287,7 @@ function startBattle(ids){
   save('playing');
   countdown(nextMatch);
 }
+function curRound(){ return B.playIn && B.roundNo === 1 ? t('playIn') : roundName(B.round.length); }
 function roundName(n){
   return n === 2 ? t('final') : n <= 4 ? t('semi') : n <= 8 ? t('quarter') : t('roundOf', {n});
 }
@@ -1286,12 +1295,12 @@ function nextMatch(){
   if (B.i >= B.round.length) { B.round = B.next; B.next = []; B.i = 0; B.roundNo++; }
   if (B.round.length === 1 && B.i === 0 && B.next.length === 0) return finishBattle(B.round[0]);
   if (B.i === B.round.length - 1) { B.next.push(B.round[B.i]); B.i++; return nextMatch(); } // bye
-  const name = roundName(B.round.length);
+  const name = curRound();
   if (B.banner !== B.roundNo) {
     B.banner = B.roundNo;
     $('#arena').innerHTML = ''; $('#roundName').textContent = name;
     const m = Math.floor(B.round.length / 2);
-    return banner(name, m === 1 ? t('match1') : t('matches', {n:m}), nextMatch, B.round.length === 2);
+    return banner(name, m === 1 ? t('match1') : t('matches', {n:m}), nextMatch, B.round.length === 2 && !(B.playIn && B.roundNo === 1));
   }
   const a = B.round[B.i], b = B.round[B.i + 1];
   $('#roundName').textContent = name;
@@ -1308,7 +1317,7 @@ function choose(side){
   if (busy || current !== 'battle') return; busy = true;
   const a = B.round[B.i], b = B.round[B.i + 1];
   const win = side === 0 ? a : b, lose = side === 0 ? b : a;
-  S.picks.push({ round: roundName(B.round.length), a:a.id, b:b.id, winner:win.id });
+  S.picks.push({ round: curRound(), a:a.id, b:b.id, winner:win.id });
   B.out.push({ id:lose.id, round:B.roundNo });
   B.next.push(win); B.i += 2;
   setPip('#battlePips', B.played, 'done'); B.played++;
