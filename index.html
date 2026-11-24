@@ -572,7 +572,7 @@ const T = {
     rank1:'🐣 App Rookie', rank2:'🧭 App Explorer', rank3:'🚀 App Pro', rank4:'🏆 App Legend',
     share:'📤 Share my result', shareFav:'My pick in Swipe Arena by Websight: {x} 🏆 Score {n}. Can you beat it?', shareNo:'I scored {n} in Swipe Arena by Websight. Can you beat it?',
     topToday:"Today's top players", todayBest:"Today's best",
-    boardBtn:'🏆 Project leaderboard', boardTitle:'Top Projects', boardSub:'Most loved by all players · {n} games',
+    boardBtn:'🏆 Project leaderboard', boardTitle:'Top Projects', boardSub:'Most loved by all players · {n} games', boardSub1:'Most loved by all players · 1 game',
     boardLoading:'Loading the leaderboard…', boardEmpty:'No games yet. Be the first!', boardError:"Couldn't load the leaderboard. Check your connection and try again.",
     boardKey:'👑 champion 10 · ⭐ super like 5 · ⚔️ battle win 3 · 💚 like 2', boardSeeAll:'🏆 See full leaderboard', boardEveryone:'Top projects · everyone', pts:'pts',
     tapToView:'Tap a project to see it on our website', viewOn:'See {x} on websight.kw', madeBy:'Made by Websight',
@@ -596,7 +596,7 @@ const T = {
     rank1:'🐣 مبتدئ', rank2:'🧭 مستكشف', rank3:'🚀 محترف', rank4:'🏆 أسطورة',
     share:'📤 شارك نتيجتك', shareFav:'اختياري في ساحة السحب من ويب سايت: {x} 🏆 نقاطي {n}. تقدر تتفوق علي؟', shareNo:'جبت {n} نقطة في ساحة السحب من ويب سايت. تقدر تتفوق علي؟',
     topToday:'أفضل لاعبي اليوم', todayBest:'أفضل نتيجة اليوم',
-    boardBtn:'🏆 ترتيب المشاريع', boardTitle:'أفضل المشاريع', boardSub:'الأكثر حبًا من جميع اللاعبين · {n} لعبة',
+    boardBtn:'🏆 ترتيب المشاريع', boardTitle:'أفضل المشاريع', boardSub:'الأكثر حبًا من جميع اللاعبين · {n} لعبة', boardSub1:'الأكثر حبًا من جميع اللاعبين · لعبة واحدة',
     boardLoading:'جارٍ تحميل الترتيب…', boardEmpty:'لا توجد ألعاب بعد. كن الأول!', boardError:'تعذّر تحميل الترتيب. تحقّق من الاتصال وحاول مرة أخرى.',
     boardKey:'👑 بطل 10 · ⭐ سوبر لايك 5 · ⚔️ فوز 3 · 💚 إعجاب 2', boardSeeAll:'🏆 عرض الترتيب الكامل', boardEveryone:'أفضل المشاريع · الجميع', pts:'نقطة',
     tapToView:'اضغط على أي مشروع لتشاهده على موقعنا', viewOn:'شاهد {x} على موقعنا', madeBy:'من تطوير ويب سايت',
@@ -1512,7 +1512,7 @@ function renderBoard(state){
   if (state === 'loading') { body.innerHTML = h + `<div class="bnote">⏳ ${esc(t('boardLoading'))}</div>`; return; }
   if (!Board.data) { body.innerHTML = h + `<div class="bnote">⚠️ ${esc(t('boardError'))}</div>`; return; }
   const rows = Board.rows(), max = rows[0]?.points || 0;
-  h += `<p class="lead">${esc(t('boardSub', {n: (Board.data.games || 0).toLocaleString('en')}))}</p>`;
+  h += `<p class="lead">${esc(Board.data.games === 1 ? t('boardSub1') : t('boardSub', {n: (Board.data.games || 0).toLocaleString('en')}))}</p>`;
   if (!max) { body.innerHTML = h + `<div class="bnote">🎮 ${esc(t('boardEmpty'))}</div>`; return; }
   const pod = (r, k) => { const url = projUrl(r.p), tag = url ? 'a' : 'div';
     return `<${tag} class="pod p${k}" ${url ? linkAttrs(url) : ''}>${k === 1 ? '<span class="crownp">👑</span>' : ''}${swatch(r.p)}<b>${esc(L(r.p.name))}</b><span class="pp">${r.points.toLocaleString('en')} ${esc(t('pts'))}</span><span class="stepb">${k}</span></${tag}>`; };
