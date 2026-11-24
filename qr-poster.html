@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swipe Arena · QR poster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Baloo+Bhaijaan+2:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<style>
+:root{--ink:#1a0b3d;--pink:#ff3d8b;--pink-d:#b0105a;--yellow:#ffd23f;--yellow-d:#d98c00;--orange:#ff8a00;--lilac:#c9b8ff;--green:#2ed573;--blue:#3a86ff}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#2a2340}
+body{font-family:'Baloo 2','Baloo Bhaijaan 2',system-ui,sans-serif;color:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:24px 0}
+@page{size:A4 portrait;margin:0}
+
+/* tools bar (screen only) */
+.tools{max-width:794px;margin:0 auto 16px;padding:0 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tools button{font:inherit;font-weight:800;font-size:15px;border:0;border-radius:99px;padding:8px 18px;cursor:pointer;background:var(--yellow);color:var(--ink);box-shadow:0 4px 0 var(--yellow-d)}
+.tools button.alt{background:#fff;box-shadow:0 4px 0 var(--lilac)}
+.tools button:active{transform:translateY(3px);box-shadow:none}
+.tools .url{flex:1;min-width:220px;font-size:14px;color:#d9d2f5;word-break:break-all}
+.warn{max-width:794px;margin:0 auto 14px;padding:10px 16px;border-radius:14px;background:#ff4757;font-weight:800;text-align:center}
+.warn[hidden]{display:none}
+
+/* A4 poster: 210 x 297 mm */
+.poster{position:relative;width:210mm;height:297mm;margin:0 auto;overflow:hidden;text-align:center;
+  background:radial-gradient(130% 90% at 50% 30%,#8f3dff 0%,#5216c4 34%,#2a0b7a 66%,#12043a 100%);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.rays{position:absolute;left:50%;top:44%;width:300mm;height:300mm;margin:-150mm 0 0 -150mm;
+  background:repeating-conic-gradient(rgba(255,255,255,.09) 0 9deg,transparent 9deg 18deg);
+  -webkit-mask:radial-gradient(circle,#000 0,transparent 62%);mask:radial-gradient(circle,#000 0,transparent 62%)}
+.dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.14) 1.2px,transparent 1.7px);background-size:7mm 7mm;
+  -webkit-mask:linear-gradient(#000,transparent 30%,transparent 70%,#000);mask:linear-gradient(#000,transparent 30%,transparent 70%,#000)}
+.deco{position:absolute;font-weight:800;line-height:1;opacity:.7}
+.inner{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;padding:12mm 14mm 10mm}
+
+.logo{display:inline-flex;align-items:center;gap:3mm;background:#fff;color:#061023;border-radius:6mm;padding:2mm 6mm 2mm 2mm;font-weight:800;font-size:8mm;box-shadow:0 1.6mm 0 var(--lilac)}
+.logo svg{width:13mm;height:13mm}
+.title{margin-top:5mm;transform:rotate(-4deg)}
+.title span{display:block;font-weight:800;line-height:.84;text-transform:uppercase}
+.title .t1{font-size:27mm;color:#fff;text-shadow:0 2mm 0 var(--pink),0 4mm 0 var(--pink-d),0 7mm 10mm rgba(0,0,0,.45)}
+.title .t2{font-size:31mm;color:var(--yellow);margin-top:2mm;text-shadow:0 2mm 0 var(--orange),0 4mm 0 #a34d00,0 7mm 10mm rgba(0,0,0,.45)}
+.tag{margin-top:6mm;font-size:8mm;font-weight:700;line-height:1.15}
+.tag small{display:block;font-size:6.2mm;opacity:.85;font-family:'Baloo Bhaijaan 2','Baloo 2',sans-serif;direction:rtl}
+
+.qrwrap{position:relative;margin-top:10mm}
+.scan{position:absolute;z-index:2;top:-7mm;left:50%;transform:translateX(-50%) rotate(-3deg);background:var(--pink);color:#fff;font-weight:800;font-size:8mm;padding:1mm 9mm 0;border-radius:4mm;box-shadow:0 1.5mm 0 var(--pink-d);white-space:nowrap;text-transform:uppercase}
+.qrcard{background:#fff;border-radius:9mm;padding:9mm 9mm 7mm;box-shadow:0 2.5mm 0 var(--lilac),0 10mm 24mm rgba(0,0,0,.45)}
+#qr{width:76mm;height:76mm;display:block}
+.urltxt{margin-top:3mm;color:var(--ink);font-weight:800;font-size:5.2mm;letter-spacing:.02em}
+
+.steps{display:flex;gap:5mm;margin-top:8mm}
+.step{width:52mm;background:#fff;color:var(--ink);border-radius:6mm;padding:3mm 3mm 3.5mm;box-shadow:0 1.6mm 0 var(--lilac)}
+.step i{display:block;font-style:normal;font-size:10mm;line-height:1.1}
+.step b{display:block;font-size:5.6mm;line-height:1.05;text-transform:uppercase}
+.step span{display:block;font-size:4.2mm;font-weight:700;color:#5b4f7d;font-family:'Baloo Bhaijaan 2','Baloo 2',sans-serif}
+.foot{margin-top:auto;font-size:5mm;font-weight:700;opacity:.85}
+
+@media print{
+  html,body{background:none;padding:0}
+  .tools,.warn.screen-only{display:none!important}
+  .poster{box-shadow:none;margin:0}
+}
+@media screen and (max-width:820px){ .poster{zoom:.45} }
+</style>
+</head>
+<body>
+
+<div class="tools">
+  <button onclick="print()">🖨️ Print / Save PDF</button>
+  <button class="alt" onclick="downloadPNG()">⬇️ QR as PNG</button>
+  <button class="alt" onclick="downloadSVG()">⬇️ QR as SVG</button>
+  <span class="url" id="urlShow"></span>
+</div>
+<div class="warn" id="warn" hidden>⚠️ Placeholder link: set GAME_URL in qr-poster.html (or add ?url=…) before printing</div>
+
+<div class="poster" id="poster">
+  <div class="rays"></div><div class="dots"></div>
+  <span class="deco" style="left:12mm;top:70mm;color:#ffd23f;font-size:9mm">★</span>
+  <span class="deco" style="right:16mm;top:58mm;color:#2de2e6;font-size:7mm">◆</span>
+  <span class="deco" style="left:20mm;top:150mm;color:#ff3d8b;font-size:8mm">♥</span>
+  <span class="deco" style="right:14mm;top:165mm;color:#2ed573;font-size:9mm">✚</span>
+  <span class="deco" style="left:30mm;bottom:30mm;color:#ff8a00;font-size:7mm">▲</span>
+  <span class="deco" style="right:30mm;bottom:40mm;color:#fff;font-size:8mm">✦</span>
+
+  <div class="inner">
+    <div class="logo"><span id="logoSlot"></span>websight</div>
+    <h1 class="title"><span class="t1">Swipe</span><span class="t2">Arena</span></h1>
+    <p class="tag">Pick your favourite app &amp; climb today's leaderboard!<small>اختر تطبيقك المفضّل وتصدّر لوحة اليوم!</small></p>
+
+    <div class="qrwrap">
+      <div class="scan">📱 Scan to play</div>
+      <div class="qrcard"><svg id="qr" viewBox="0 0 10 10" role="img" aria-label="QR code"></svg><div class="urltxt" id="urlTxt"></div></div>
+    </div>
+
+    <div class="steps">
+      <div class="step"><i>📷</i><b>Scan</b><span>امسح الرمز</span></div>
+      <div class="step"><i>⚔️</i><b>Swipe &amp; battle</b><span>اسحب وتحدَّ</span></div>
+      <div class="step"><i>🏆</i><b>Crown a champion</b><span>توّج البطل</span></div>
+    </div>
+
+    <p class="foot">Made by Websight · websight.kw</p>
+  </div>
+</div>
+
+<script>
+/* ===== The link the QR opens. Set it here, or open this page with ?url=https://… ===== */
+const GAME_URL = '';
+const PLACEHOLDER = 'https://websight.kw/play';
+
+const LOGO = '<svg viewBox="0 0 93 93" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="46.5" cy="46.5" r="46.5" fill="#C2C0D6"/><path d="M58.3552 28.2681L54.983 60.047L51.3869 28.2681H41.7178L38.3455 60.047L35.8736 36.2128H28L33.3966 75.2175H43.0657L46.4379 48.492L49.8102 75.2175H59.4793L66 28.2681H58.3552Z" fill="white"/><path d="M29.9949 31.4692H22.1531L21 24H29.0765L30 31.4692H29.9949Z" fill="white"/></svg>';
+document.getElementById('logoSlot').outerHTML = LOGO;
+
+const fromParam = new URLSearchParams(location.search).get('url');
+const url = (fromParam && /^https?:\/\//i.test(fromParam)) ? fromParam : (GAME_URL || PLACEHOLDER);
+const isPlaceholder = !fromParam && !GAME_URL;
+document.getElementById('warn').hidden = !isPlaceholder;
+document.getElementById('urlShow').textContent = 'QR opens: ' + url;
+document.getElementById('urlTxt').textContent = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+
+/* Build the QR as crisp SVG. Level H (30% error correction) leaves room for the logo in the middle. */
+function buildQR(text){
+  const q = qrcode(0, 'H'); q.addData(text); q.make();
+  const n = q.getModuleCount(), quiet = 2, size = n + quiet * 2;
+  const logoMods = Math.floor(n * .24) | 1;           // odd number of modules, ~24% of width
+  const lo = (n - logoMods) / 2, hi = lo + logoMods;
+  const isFinder = (r, c) => (r < 7 && c < 7) || (r < 7 && c >= n - 7) || (r >= n - 7 && c < 7);
+  let d = '';
+  for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) {
+    if (!q.isDark(r, c) || isFinder(r, c)) continue;
+    if (r >= lo - .5 && r < hi + .5 && c >= lo - .5 && c < hi + .5) continue;  // clear the logo area
+    d += `M${c + quiet} ${r + quiet}h1v1h-1z`;
+  }
+  const finder = (x, y) => `
+    <rect x="${x + .5}" y="${y + .5}" width="6" height="6" rx="1.6" fill="none" stroke="#1a0b3d" stroke-width="1"/>
+    <rect x="${x + 2}" y="${y + 2}" width="3" height="3" rx=".9" fill="#ff3d8b"/>`;
+  const L = lo + quiet - .4, S = logoMods + .8;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" shape-rendering="crispEdges">
+    <rect width="${size}" height="${size}" fill="#fff"/>
+    <path d="${d}" fill="#1a0b3d"/>
+    <g shape-rendering="geometricPrecision">${finder(quiet, quiet)}${finder(quiet + n - 7, quiet)}${finder(quiet, quiet + n - 7)}
+    <rect x="${L}" y="${L}" width="${S}" height="${S}" rx="${S * .22}" fill="#fff"/>
+    <svg x="${L + S * .1}" y="${L + S * .1}" width="${S * .8}" height="${S * .8}" viewBox="0 0 93 93">${LOGO.replace(/^<svg[^>]*>|<\/svg>$/g, '')}</svg></g>
+  </svg>`;
+}
+const svgText = buildQR(url);
+document.getElementById('qr').outerHTML = svgText.replace('<svg ', '<svg id="qr" ');
+
+function save(blob, name){
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function downloadSVG(){ save(new Blob([svgText], {type:'image/svg+xml'}), 'swipe-arena-qr.svg'); }
+function downloadPNG(){
+  const img = new Image(), px = 2000;
+  img.onload = () => {
+    const c = document.createElement('canvas'); c.width = c.height = px;
+    c.getContext('2d').drawImage(img, 0, 0, px, px);
+    c.toBlob(b => save(b, 'swipe-arena-qr.png'), 'image/png');
+  };
+  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgText);
+}
+</script>
+</body>
+</html>
