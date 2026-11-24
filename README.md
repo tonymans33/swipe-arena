@@ -1,5 +1,7 @@
 # Websight — Swipe Arena (event game)
 
+**Live:** https://tonymans33.github.io/swipe-arena/ · booth iPad: https://tonymans33.github.io/swipe-arena/?kiosk=1 · QR poster: https://tonymans33.github.io/swipe-arena/qr-poster.html
+
 The whole game is one file: `index.html`. Host it anywhere static (for example websight.kw/play, Netlify or GitHub Pages).
 
 ## Modes
