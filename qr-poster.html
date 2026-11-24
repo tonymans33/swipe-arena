@@ -46,7 +46,7 @@ body{font-family:'Baloo 2','Baloo Bhaijaan 2',system-ui,sans-serif;color:#fff;-w
 
 .qrwrap{position:relative;margin-top:10mm}
 .scan{position:absolute;z-index:2;top:-7mm;left:50%;transform:translateX(-50%) rotate(-3deg);background:var(--pink);color:#fff;font-weight:800;font-size:8mm;padding:1mm 9mm 0;border-radius:4mm;box-shadow:0 1.5mm 0 var(--pink-d);white-space:nowrap;text-transform:uppercase}
-.qrcard{background:#fff;border-radius:9mm;padding:9mm 9mm 7mm;box-shadow:0 2.5mm 0 var(--lilac),0 10mm 24mm rgba(0,0,0,.45)}
+.qrcard{display:flex;align-items:center;justify-content:center;background:#fff;border-radius:9mm;padding:9mm;box-shadow:0 2.5mm 0 var(--lilac),0 10mm 24mm rgba(0,0,0,.45)}
 #qr{width:76mm;height:76mm;display:block}
 .urltxt{margin-top:3mm;color:var(--ink);font-weight:800;font-size:5.2mm;letter-spacing:.02em}
 
@@ -91,7 +91,7 @@ body{font-family:'Baloo 2','Baloo Bhaijaan 2',system-ui,sans-serif;color:#fff;-w
 
     <div class="qrwrap">
       <div class="scan">📱 Scan to play</div>
-      <div class="qrcard"><svg id="qr" viewBox="0 0 10 10" role="img" aria-label="QR code"></svg><div class="urltxt" id="urlTxt"></div></div>
+      <div class="qrcard"><svg id="qr" viewBox="0 0 10 10" role="img" aria-label="QR code"></svg></div>
     </div>
 
     <div class="steps">
@@ -117,7 +117,6 @@ const url = (fromParam && /^https?:\/\//i.test(fromParam)) ? fromParam : (GAME_U
 const isPlaceholder = !fromParam && !GAME_URL;
 document.getElementById('warn').hidden = !isPlaceholder;
 document.getElementById('urlShow').textContent = 'QR opens: ' + url;
-document.getElementById('urlTxt').textContent = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
 /* Build the QR as crisp SVG. Level H (30% error correction) leaves room for the logo in the middle. */
 function buildQR(text){
