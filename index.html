@@ -148,6 +148,8 @@ html[dir=rtl] .inp input[dir=ltr]{text-align:right}
 /* tall art areas (swipe deck, champion): wider and taller screenshot, cropped to 4:3 */
 @container (orientation:portrait){ .shot{width:96cqw;top:46%} .shot img{aspect-ratio:4/3} }
 .art.has-img .phone:not(.real){display:none}
+/* fit:'contain' — show the whole (very wide) screenshot, letterboxed on its own background colour */
+.shot.contain img{object-fit:contain;background:var(--shotbg,#fff)}
 /* portrait app screenshots (phone:true) sit inside the phone frame */
 .phone.real{height:88%;top:51%;aspect-ratio:9/15.2}
 .phone.real .scr{padding:0;display:block}
@@ -538,7 +540,7 @@ const PROJECTS = [
   { id:'riders', slug:'riders', name:'Riders', tags:['app','ai','system'], icon:'🛵', colors:['#ff3d6e','#ff9f43'], image:'/assets/work/riders-cover.webp',
     industry:{ en:'Delivery', ar:'توصيل' },
     desc:{ en:'Delivery operations platform — group orders, digital wallets and payments.', ar:'منصة عمليات توصيل — طلبات جماعية ومحافظ رقمية ومدفوعات.' } },
-  { id:'live', slug:'live', name:'LIVE', tags:['app','web'], icon:'🛋️', colors:['#a855f7','#ff4fd8'], image:'img/live.jpg', phone:true, logo:'/assets/partners/live.svg',
+  { id:'live', slug:'live', name:'LIVE', tags:['app','web'], icon:'🛋️', colors:['#a855f7','#ff4fd8'], image:'img/live.jpg', fit:'contain', bg:'#f6f5fd', pos:'88% 50%', logo:'/assets/partners/live.svg',
     industry:{ en:'Home & design', ar:'المنزل والتصميم' },
     desc:{ en:'Design healthier spaces, shop products and connect with experts.', ar:'صمّم مساحات أصح، تسوّق المنتجات وتواصل مع الخبراء.' } },
   { id:'muheet', slug:'al-muheet-pools', name:'Al Muheet', tags:['web','shop'], icon:'🏊', colors:['#0ea5e9','#2de2e6'], image:'/assets/work/al-muheet-cover.webp',
@@ -981,7 +983,7 @@ function art(p, n){
   const src = imgSrc(p), logo = !src && p.logo ? (p.logo.startsWith('/') ? CONFIG.SITE + p.logo : p.logo) : '';
   return `<div class="art ph ${src || logo ? 'has-img' : ''}">
     ${src && p.phone ? `<div class="phone real"><div class="scr"><img src="${esc(src)}" alt="" draggable="false" decoding="async" onerror="imgFail(this)"></div></div>` : ''}
-    ${src && !p.phone ? `<div class="shot"><img src="${esc(src)}" data-raw="${esc(imgRaw(p))}" alt="" draggable="false" decoding="async" onerror="imgFail(this)"></div>` : ''}
+    ${src && !p.phone ? `<div class="shot ${p.fit === 'contain' ? 'contain' : ''}" style="${p.bg ? '--shotbg:' + esc(p.bg) : ''}"><img src="${esc(src)}" data-raw="${esc(imgRaw(p))}" alt="" draggable="false" decoding="async" onerror="imgFail(this)"></div>` : ''}
     ${logo ? `<div class="shot logoshot"><img src="${esc(logo)}" alt="" draggable="false" onerror="imgFail(this)"></div>` : ''}
     <div class="phone"><div class="scr"><div class="nav"><i></i><i></i></div><div class="hero">${esc(L(p.name)[0])}</div>
       <i class="ln"></i><i class="ln s"></i><div class="row"><i></i><i></i><i></i></div><i class="btn"></i></div></div>
@@ -1003,7 +1005,7 @@ const projUrl = p => p.slug ? `${CONFIG.SITE}/${S.lang}/work/${p.slug}` : '';
 const linkAttrs = url => `href="${esc(url)}" target="_blank" rel="noopener"`;
 function swatch(p){
   const src = imgSrc(p);
-  return `<span class="sw" style="${cardVars(p)}">${p.icon}${src ? `<img src="${esc(src)}" data-raw="${esc(imgRaw(p))}" alt="" onerror="imgFail(this)">` : ''}</span>`;
+  return `<span class="sw" style="${cardVars(p)}">${p.icon}${src ? `<img style="object-position:${esc(p.pos || '50% 50%')}" src="${esc(src)}" data-raw="${esc(imgRaw(p))}" alt="" onerror="imgFail(this)">` : ''}</span>`;
 }
 
 function applyI18n(){

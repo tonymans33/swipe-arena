@@ -38,6 +38,7 @@ Each game becomes one row in a **Plays** tab, and the row updates as the player 
 
 ## Projects
 The 8 cards are real Websight case studies: AQL, KIB Mubader, ILG, Riders, LIVE, Al Muheet, Wasfat and Arzaq. Edit `PROJECTS` in `index.html`:
+- `fit: 'contain'` + `bg`: show a very wide screenshot whole (not cropped) on its background colour; `pos` sets the crop for the small thumbnail (LIVE uses this).
 - `logo`: shown on a white panel when there is no `image` (LIVE uses its logo until a screenshot is added).
 - `image`: a websight.kw path such as `/assets/work/riders-cover.webp` (loaded resized, about 30 KB each, through the site's image optimizer), a full URL, or a local file like `img/x.jpg`. If an image fails to load, the card shows generated art instead. Portrait phone screenshots: add `phone:true` and the image is shown inside a phone frame (LIVE uses `img/live.jpg`).
 - `industry` and `desc`: the English and Arabic text on the card.
