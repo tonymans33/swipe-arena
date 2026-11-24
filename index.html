@@ -537,7 +537,7 @@ const PROJECTS = [
   { id:'ilg', slug:'ilg', name:'ILG', tags:['system','web','app'], icon:'📑', colors:['#ff8a00','#ffd23f'], image:'/assets/work/ilg-cover.webp',
     industry:{ en:'Law firm', ar:'محاماة' },
     desc:{ en:"One of Kuwait's leading law firms since 1984 — custom system, website and app.", ar:'من أبرز مكاتب المحاماة في الكويت منذ 1984 — نظام مخصص وموقع وتطبيق.' } },
-  { id:'riders', slug:'riders', name:'Riders', tags:['app','ai','system'], icon:'🛵', colors:['#ff3d6e','#ff9f43'], image:'/assets/work/riders-cover.webp',
+  { id:'riders', slug:'riders', name:'Riders', tags:['app','ai','system'], icon:'🛵', colors:['#ff3d6e','#ff9f43'], image:'img/riders.jpg', shotPos:'0% 50%', pos:'78% 50%',
     industry:{ en:'Delivery', ar:'توصيل' },
     desc:{ en:'Delivery operations platform — group orders, digital wallets and payments.', ar:'منصة عمليات توصيل — طلبات جماعية ومحافظ رقمية ومدفوعات.' } },
   { id:'live', slug:'live', name:'LIVE', tags:['app','web'], icon:'🛋️', colors:['#a855f7','#ff4fd8'], image:'img/live.jpg', fit:'contain', bg:'#f6f5fd', pos:'88% 50%', logo:'/assets/partners/live.svg',
@@ -989,7 +989,7 @@ function art(p, n){
   const src = imgSrc(p), logo = !src && p.logo ? (p.logo.startsWith('/') ? CONFIG.SITE + p.logo : p.logo) : '';
   return `<div class="art ph ${src || logo ? 'has-img' : ''}">
     ${src && p.phone ? `<div class="phone real"><div class="scr"><img src="${esc(src)}" alt="" draggable="false" decoding="async" onerror="imgFail(this)"></div></div>` : ''}
-    ${src && !p.phone ? `<div class="shot ${p.fit === 'contain' ? 'contain' : ''}" style="${p.bg ? '--shotbg:' + esc(p.bg) : ''}"><img src="${esc(src)}" data-raw="${esc(imgRaw(p))}" alt="" draggable="false" decoding="async" onerror="imgFail(this)"></div>` : ''}
+    ${src && !p.phone ? `<div class="shot ${p.fit === 'contain' ? 'contain' : ''}" style="${p.bg ? '--shotbg:' + esc(p.bg) : ''}"><img${p.shotPos ? ` style="object-position:${esc(p.shotPos)}"` : ''} src="${esc(src)}" data-raw="${esc(imgRaw(p))}" alt="" draggable="false" decoding="async" onerror="imgFail(this)"></div>` : ''}
     ${logo ? `<div class="shot logoshot"><img src="${esc(logo)}" alt="" draggable="false" onerror="imgFail(this)"></div>` : ''}
     <div class="phone"><div class="scr"><div class="nav"><i></i><i></i></div><div class="hero">${esc(L(p.name)[0])}</div>
       <i class="ln"></i><i class="ln s"></i><div class="row"><i></i><i></i><i></i></div><i class="btn"></i></div></div>
