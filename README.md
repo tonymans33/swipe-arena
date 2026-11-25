@@ -1,4 +1,4 @@
-# Websight — Swipe Arena (event game)
+# Websight — PickChamp (event game)
 
 **Live:** https://tonymans33.github.io/swipe-arena/ · booth iPad: https://tonymans33.github.io/swipe-arena/?kiosk=1 · QR poster: https://tonymans33.github.io/swipe-arena/qr-poster.html
 
