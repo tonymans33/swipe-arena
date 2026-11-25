@@ -302,5 +302,157 @@
       "en": "Fully digital valet parking — SMS, QR, and mobile app car retrieval\n\n",
       "ar": "Fully digital valet parking — SMS, QR, and mobile app car retrieval\n\n"
     }
+  },
+  {
+    "hidden": false,
+    "id": "pmww3harf",
+    "slug": "elevation-coworking",
+    "name": "Coworking Space",
+    "tags": [
+      "web",
+      "system",
+      "ai"
+    ],
+    "icon": "✨",
+    "colors": [
+      "#6366f1",
+      "#f472b6"
+    ],
+    "image": "img/pmww3harf-1795609465.jpg",
+    "industry": {
+      "en": "Booking System",
+      "ar": ""
+    },
+    "desc": {
+      "en": "Open the door to the cozy workspace of your dreams with our expertise in creating exquisite interiors that are comfortable to work in.",
+      "ar": ""
+    },
+    "fit": "contain",
+    "bg": "#ffffff"
+  },
+  {
+    "hidden": false,
+    "id": "pmww3j5ht",
+    "slug": "vellaris",
+    "name": "Vellaris",
+    "tags": [
+      "web",
+      "system"
+    ],
+    "icon": "✨",
+    "colors": [
+      "#6366f1",
+      "#f472b6"
+    ],
+    "image": "img/pmww3j5ht-1795609535.jpg",
+    "industry": {
+      "en": "",
+      "ar": ""
+    },
+    "desc": {
+      "en": "End-to-end manuscript and publication support — writing, statistics, figures, and journal-ready submissions",
+      "ar": ""
+    },
+    "bg": "#ffffff"
+  },
+  {
+    "hidden": false,
+    "id": "pmww3kso1",
+    "slug": "bshqrf",
+    "name": "BSHQRF",
+    "tags": [
+      "web",
+      "shop"
+    ],
+    "icon": "✨",
+    "colors": [
+      "#6366f1",
+      "#f472b6"
+    ],
+    "image": "img/pmww3kso1-1795609610.jpg",
+    "industry": {
+      "en": "E-commerce",
+      "ar": ""
+    },
+    "desc": {
+      "en": "Kuwaiti luxury watch microbrand — premium e-commerce with global shipping",
+      "ar": ""
+    },
+    "bg": "#ffffff"
+  },
+  {
+    "hidden": false,
+    "id": "pmww3mvtv",
+    "slug": "elevation-holding",
+    "name": "Elevation Holding",
+    "tags": [
+      "web",
+      "system"
+    ],
+    "icon": "✨",
+    "colors": [
+      "#6366f1",
+      "#f472b6"
+    ],
+    "image": "img/pmww3mvtv-1795609688.jpg",
+    "industry": {
+      "en": "",
+      "ar": ""
+    },
+    "desc": {
+      "en": "Bilingual corporate website — business formation and market-entry services for foreign investors in Kuwait\n\n",
+      "ar": ""
+    }
+  },
+  {
+    "hidden": false,
+    "id": "pmww3o275",
+    "slug": "levels",
+    "name": "Levels Kuwait",
+    "tags": [
+      "web"
+    ],
+    "icon": "✨",
+    "colors": [
+      "#6366f1",
+      "#f472b6"
+    ],
+    "image": "img/pmww3o275-1795609882.jpg",
+    "industry": {
+      "en": "",
+      "ar": ""
+    },
+    "desc": {
+      "en": "Home construction company — building, supervising, and turnkey projects\n\n",
+      "ar": ""
+    },
+    "fit": "contain",
+    "bg": "#ffffff"
+  },
+  {
+    "hidden": false,
+    "id": "pmww3rn5q",
+    "slug": "coops",
+    "name": "Coops Delivery",
+    "tags": [
+      "web",
+      "shop"
+    ],
+    "icon": "✨",
+    "colors": [
+      "#6366f1",
+      "#f472b6"
+    ],
+    "image": "img/pmww3rn5q-1795609915.jpg",
+    "industry": {
+      "en": "",
+      "ar": ""
+    },
+    "desc": {
+      "en": "Cooperative delivery app — all Kuwait co-ops in one platform\n\n",
+      "ar": ""
+    },
+    "fit": "contain",
+    "bg": "#ffffff"
   }
 ]
