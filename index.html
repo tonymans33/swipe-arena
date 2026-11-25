@@ -121,6 +121,8 @@ html[lang=ar] .tab{letter-spacing:0}
 .inp{display:flex;align-items:center;gap:10px;height:54px;margin-bottom:10px;padding:0 14px;border-radius:18px;background:#f4efff;border:3px solid #e6dcff;transition:border-color .2s,background .2s,transform .15s}
 .inp:focus-within{border-color:var(--pink);background:#fff;transform:scale(1.02)}
 .inp>span{font-size:20px}
+.ccode{flex:none;border:0;background:#ece6ff;border-radius:10px;padding:4px 6px;font-size:15px;font-weight:800;color:var(--ink);outline:none;max-width:104px;cursor:pointer}
+.ccode:focus{box-shadow:0 0 0 2px var(--pink)}
 .inp input{flex:1;min-width:0;border:0;background:none;outline:none;font-size:17px;font-weight:700;color:var(--ink)}
 .inp input::placeholder{color:#a497cc;font-weight:600}
 html[dir=rtl] .inp input[dir=ltr]{text-align:right}
@@ -470,6 +472,7 @@ html[lang=ar] .pod b{text-transform:none}
         <label class="inp"><span>👤</span>
           <input id="fName" name="name" autocomplete="name" autocapitalize="words" enterkeyhint="next" maxlength="80" required data-i18n-ph="name"></label>
         <label class="inp"><span>📱</span>
+          <select id="fCode" class="ccode" aria-label="Country code" dir="ltr"></select>
           <input id="fPhone" name="tel" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" enterkeyhint="next" maxlength="24" data-i18n-ph="phone"></label>
         <label class="inp"><span>✉️</span>
           <input id="fEmail" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" dir="ltr" enterkeyhint="done" maxlength="120" data-i18n-ph="email"></label>
@@ -1038,7 +1041,35 @@ function makeFloaters(){
 /* =====================================================================
    Welcome form
    ===================================================================== */
+/* Country codes for the phone field (Kuwait first). A number typed with + or 00 overrides the picker. */
+const COUNTRIES = [['🇰🇼','965'],['🇸🇦','966'],['🇦🇪','971'],['🇧🇭','973'],['🇶🇦','974'],['🇴🇲','968'],['🇪🇬','20'],['🇯🇴','962'],
+  ['🇱🇧','961'],['🇸🇾','963'],['🇮🇶','964'],['🇵🇸','970'],['🇸🇩','249'],['🇮🇳','91'],['🇵🇰','92'],['🇧🇩','880'],['🇵🇭','63'],
+  ['🇱🇰','94'],['🇳🇵','977'],['🇬🇧','44'],['🇺🇸','1'],['🇹🇷','90'],['🇮🇷','98']];
+function fillCountryCodes(){
+  $('#fCode').innerHTML = COUNTRIES.map(([f, c]) => `<option value="+${c}">${f} +${c}</option>`).join('');
+}
+/* "+20 1284165074" → select +20, input "1284165074" */
+function showPhone(full){
+  const p = String(full || '').trim();
+  const m = p.match(/^\+(\d+)\s*(.*)$/);
+  if (m) { const c = COUNTRIES.map(x => x[1]).sort((a, b) => b.length - a.length).find(c => (m[1] + m[2].replace(/\D/g, '')).startsWith(c));
+    if (c) { $('#fCode').value = '+' + c; $('#fPhone').value = (m[1] + m[2].replace(/\D/g, '')).slice(c.length); return; } }
+  $('#fPhone').value = p;
+}
+/* full international number from picker + input; drops the local leading 0 (e.g. Egypt 01…) */
+function readPhone(){
+  let p = $('#fPhone').value.trim();
+  if (!p) return '';
+  if (p.startsWith('00')) p = '+' + p.slice(2);
+  if (p.startsWith('+')) return '+' + p.replace(/\D/g, '');
+  const code = $('#fCode').value.replace('+', '');
+  let d = p.replace(/\D/g, '');
+  if (d.startsWith(code) && d.length > code.length + 7) d = d.slice(code.length);   // typed the code without +
+  return '+' + code + d.replace(/^0+/, '');
+}
+
 function setupWelcome(){
+  fillCountryCodes();
   $$('[data-logo]').forEach(el => el.outerHTML = LOGO_SVG);
 
   $('#langBtn').onclick = () => { S.lang = S.lang === 'en' ? 'ar' : 'en'; store.set('ws_lang', S.lang); applyI18n(); renderTodayBest(); Sfx.tap(); };
@@ -1058,7 +1089,7 @@ function setupWelcome(){
         const [c] = await navigator.contacts.select(['name','tel','email'], {multiple:false});
         if (!c) return;
         if (c.name?.[0]) $('#fName').value = c.name[0];
-        if (c.tel?.[0]) $('#fPhone').value = c.tel[0];
+        if (c.tel?.[0]) showPhone(c.tel[0]);
         if (c.email?.[0]) $('#fEmail').value = c.email[0];
       } catch {}
     };
@@ -1066,13 +1097,13 @@ function setupWelcome(){
 
   if (!KIOSK) {
     const saved = store.get('ws_player');
-    if (saved) { $('#fName').value = saved.name || ''; $('#fPhone').value = saved.phone || ''; $('#fEmail').value = saved.email || ''; }
+    if (saved) { $('#fName').value = saved.name || ''; showPhone(saved.phone); $('#fEmail').value = saved.email || ''; }
   }
 
   $('#form').onsubmit = e => {
     e.preventDefault();
     const name = $('#fName').value.trim();
-    let phone = $('#fPhone').value.trim();
+    let phone = readPhone();
     const email = $('#fEmail').value.trim();
     const digits = phone.replace(/\D/g, '');
     const err = (msg, el) => {
@@ -1084,7 +1115,6 @@ function setupWelcome(){
     if (phone && digits.length < 7) return err(t('errPhone'), $('#fPhone'));
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return err(t('errEmail'), $('#fEmail'));
     if (CONFIG.REQUIRE_CONTACT && !phone && !email) return err(t('errContact'), $('#fPhone'));
-    if (phone && digits.length === 8 && !phone.startsWith('+') && !phone.startsWith('00')) phone = '+965 ' + digits;
     $('#err').textContent = '';
     document.activeElement?.blur();
     S.player = { name, phone, email };

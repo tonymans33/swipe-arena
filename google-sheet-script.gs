@@ -168,13 +168,20 @@ function uchat_(method, path, payload) {
   return json;
 }
 
-// "+965 5555 1234", "55551234", "0096555551234" → "+96555551234"
+// Any of: "+965 5555 1234", "55551234" (Kuwait), "01284165074" (Egypt), "0096555551234", "+20 01284165074" → +E.164
 function normalizePhone_(raw) {
-  let p = String(raw || '').replace(/[^\d+]/g, '');
+  let p = String(raw || '').trim();
   if (p.startsWith('00')) p = '+' + p.slice(2);
-  if (!p.startsWith('+') && p.length === 8) p = '+965' + p;
-  if (!p.startsWith('+')) p = '+' + p;
-  return p;
+  let d = p.replace(/\D/g, '');
+  if (p.startsWith('+')) {
+    // drop a local trunk 0 typed after the country code, e.g. +20 0128… → +20 128…
+    const m = d.match(/^(20|44|90|91|92|94|98|880|962|963|964|966|971|977)0(\d{7,})$/);
+    return '+' + (m ? m[1] + m[2] : d);
+  }
+  if (d.length === 8) return '+965' + d;                          // Kuwait local
+  if (/^01[0125]\d{8}$/.test(d)) return '+20' + d.slice(1);       // Egypt local 01xxxxxxxxx
+  if (/^05\d{8}$/.test(d)) return '+966' + d.slice(1);            // Saudi local 05xxxxxxxx
+  return '+' + d;                                                  // assume it already includes the country code
 }
 
 function findOrCreateSubscriber_(phone, name, email) {
