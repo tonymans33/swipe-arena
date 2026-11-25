@@ -80,3 +80,12 @@ The panel only listens on this Mac (127.0.0.1) and is not part of the published 
 To redesign the banner, edit `../admin/og-card.html` and render it at 1200×630 with Chrome:
 `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --window-size=1200,630 --screenshot=og.png file://$PWD/../admin/og-card.html`
 WhatsApp caches a link's preview; if an old preview shows, it refreshes on its own after a while.
+
+## WhatsApp thank-you message (UChat)
+When a game finishes and the player gave a phone number, the sheet script sends **one** WhatsApp template message per game through UChat. The result (`sent …` or `error: …`) is written to the **WhatsApp** column. The API key never goes in the game page.
+Setup (Apps Script editor of the sheet):
+1. Paste the updated `google-sheet-script.gs` and save.
+2. ⚙️ **Project Settings → Script Properties → Add**: `UCHAT_API_KEY` = your UChat key, and `UCHAT_TEMPLATE` = the approved template name. Optional: `UCHAT_TEMPLATE_LANG` (e.g. `ar`) and `UCHAT_HEADER_IMAGE` (default: the PickChamp banner).
+3. Test: in the editor, change the number in `testWhatsApp()` to yours, select it, and click **Run** (approve the new "connect to an external service" permission).
+4. **Deploy → Manage deployments → ✏️ → New version → Deploy.**
+Template variables: `{{1}}` = first name, `{{2}}` = champion (or favourite project). If the template has an image header, the PickChamp banner is used.
