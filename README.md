@@ -1,6 +1,7 @@
 # Websight — PickChamp (event game)
 
-**Live:** https://tonymans33.github.io/swipe-arena/ · booth iPad: https://tonymans33.github.io/swipe-arena/?kiosk=1 · QR poster: https://tonymans33.github.io/swipe-arena/qr-poster.html
+**Live:** https://pickchamp.websight.kw/ · booth iPad: https://pickchamp.websight.kw/?kiosk=1 · QR poster: https://pickchamp.websight.kw/qr-poster.html  
+(GitHub Pages copy: https://tonymans33.github.io/swipe-arena/)
 
 The whole game is one file: `index.html`. Host it anywhere static (for example websight.kw/play, Netlify or GitHub Pages).
 
@@ -51,7 +52,7 @@ Battle works with any number of projects. Above 8 (or any power of two), a short
 `REQUIRE_CONTACT` is **on**: players must enter a phone number or an email (either one). Set it to `false` to make both optional. You can also change the WhatsApp number, the site URL and the kiosk timers there. The Websight logo is built into the page, so it shows even when offline.
 
 ## Event QR poster
-Open `qr-poster.html` in a browser. It is an A4 poster in the game's style, with buttons for **Print / Save PDF**, **QR as PNG** (2000 px) and **QR as SVG**.
+Open `qr-poster.html` in a browser: an A4 poster in the game's style. Print it from the browser (⌘P → Save as PDF).
 Set the game link in `GAME_URL` at the bottom of the file, or open `qr-poster.html?url=https://your-link`. Until then it shows a red placeholder warning.
 Point the QR at the public link, not `?kiosk=1` (kiosk mode is only for the booth iPad).
 
