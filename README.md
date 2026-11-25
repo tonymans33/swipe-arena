@@ -74,3 +74,9 @@ Projects live in `projects.json`. To edit them, open the control panel on this M
 3. **▶ Preview game** plays your saved changes locally (nothing is recorded in the sheet).
 4. **🚀 Publish to live site** commits `projects.json` + `img/` and pushes to GitHub; the live site updates in about a minute.
 The panel only listens on this Mac (127.0.0.1) and is not part of the published site.
+
+## Link preview (WhatsApp, iMessage, LinkedIn, X…)
+`index.html` has Open Graph + Twitter tags: title, description and `og-image.jpg` (1200×630). Icons: `favicon-32.png`, `apple-touch-icon.png`, `icon-512.png`.
+To redesign the banner, edit `../admin/og-card.html` and render it at 1200×630 with Chrome:
+`"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --window-size=1200,630 --screenshot=og.png file://$PWD/../admin/og-card.html`
+WhatsApp caches a link's preview; if an old preview shows, it refreshes on its own after a while.
