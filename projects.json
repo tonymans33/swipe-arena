@@ -1,0 +1,255 @@
+[
+  {
+    "hidden": false,
+    "id": "aql",
+    "slug": "aql",
+    "name": "AQL",
+    "tags": [
+      "system"
+    ],
+    "icon": "⚖️",
+    "colors": [
+      "#5b5bff",
+      "#22d3ee"
+    ],
+    "image": "/assets/work/aql-cover.webp",
+    "industry": {
+      "en": "Legal tech",
+      "ar": "تقنية قانونية"
+    },
+    "desc": {
+      "en": "Case and law-firm management platform, built for ILG.",
+      "ar": "منصة لإدارة القضايا ومكاتب المحاماة، صُممت لـ ILG."
+    }
+  },
+  {
+    "hidden": false,
+    "id": "kib",
+    "slug": "kib-mubader",
+    "name": "KIB Mubader",
+    "tags": [
+      "web"
+    ],
+    "icon": "🏦",
+    "colors": [
+      "#10b981",
+      "#c6f432"
+    ],
+    "image": "/assets/work/og/kib-mubader.jpg",
+    "industry": {
+      "en": "Banking",
+      "ar": "مصرفي"
+    },
+    "desc": {
+      "en": "Kuwait International Bank's entrepreneurship center — funding, mentorship and growth programs.",
+      "ar": "مركز ريادة الأعمال في بنك الكويت الدولي — تمويل وإرشاد وبرامج نمو."
+    }
+  },
+  {
+    "hidden": false,
+    "id": "ilg",
+    "slug": "ilg",
+    "name": "ILG",
+    "tags": [
+      "system",
+      "web",
+      "app"
+    ],
+    "icon": "📑",
+    "colors": [
+      "#ff8a00",
+      "#ffd23f"
+    ],
+    "image": "/assets/work/ilg-cover.webp",
+    "industry": {
+      "en": "Law firm",
+      "ar": "محاماة"
+    },
+    "desc": {
+      "en": "One of Kuwait's leading law firms since 1984 — custom system, website and app.",
+      "ar": "من أبرز مكاتب المحاماة في الكويت منذ 1984 — نظام مخصص وموقع وتطبيق."
+    }
+  },
+  {
+    "hidden": false,
+    "id": "riders",
+    "slug": "riders",
+    "name": "Riders",
+    "tags": [
+      "app",
+      "ai",
+      "system"
+    ],
+    "icon": "🛵",
+    "colors": [
+      "#ff3d6e",
+      "#ff9f43"
+    ],
+    "image": "img/riders.jpg",
+    "shotPos": "0% 50%",
+    "pos": "78% 50%",
+    "industry": {
+      "en": "Delivery",
+      "ar": "توصيل"
+    },
+    "desc": {
+      "en": "Delivery operations platform — group orders, digital wallets and payments.",
+      "ar": "منصة عمليات توصيل — طلبات جماعية ومحافظ رقمية ومدفوعات."
+    }
+  },
+  {
+    "hidden": false,
+    "id": "live",
+    "slug": "live",
+    "name": "LIVE",
+    "tags": [
+      "app",
+      "web"
+    ],
+    "icon": "🛋️",
+    "colors": [
+      "#a855f7",
+      "#ff4fd8"
+    ],
+    "image": "img/live.jpg",
+    "fit": "contain",
+    "bg": "#f6f5fd",
+    "pos": "88% 50%",
+    "logo": "/assets/partners/live.svg",
+    "industry": {
+      "en": "Home & design",
+      "ar": "المنزل والتصميم"
+    },
+    "desc": {
+      "en": "Design healthier spaces, shop products and connect with experts.",
+      "ar": "صمّم مساحات أصح، تسوّق المنتجات وتواصل مع الخبراء."
+    }
+  },
+  {
+    "hidden": false,
+    "id": "muheet",
+    "slug": "al-muheet-pools",
+    "name": "Al Muheet",
+    "tags": [
+      "web",
+      "shop"
+    ],
+    "icon": "🏊",
+    "colors": [
+      "#0ea5e9",
+      "#2de2e6"
+    ],
+    "image": "img/muheet.jpg",
+    "pos": "40% 60%",
+    "industry": {
+      "en": "Pools",
+      "ar": "مسابح"
+    },
+    "desc": {
+      "en": "Pool builders in Kuwait and Saudi Arabia since 1984 — website and online store.",
+      "ar": "رواد بناء المسابح في الكويت والسعودية منذ 1984 — موقع ومتجر إلكتروني."
+    }
+  },
+  {
+    "hidden": false,
+    "id": "wasfat",
+    "slug": "wasfat",
+    "name": "Wasfat",
+    "tags": [
+      "app",
+      "web"
+    ],
+    "icon": "🍳",
+    "colors": [
+      "#e11d48",
+      "#fb923c"
+    ],
+    "image": "img/wasfat.jpg",
+    "fit": "contain",
+    "bg": "#71141f",
+    "pos": "72% 55%",
+    "industry": {
+      "en": "Food & recipes",
+      "ar": "طبخ ووصفات"
+    },
+    "desc": {
+      "en": "Social recipe platform — iOS & Android apps plus marketing website.",
+      "ar": "منصة وصفات اجتماعية — تطبيقات iOS وAndroid وموقع تسويقي."
+    }
+  },
+  {
+    "hidden": false,
+    "id": "arzaq",
+    "slug": "arzaq",
+    "name": "Arzaq",
+    "tags": [
+      "web"
+    ],
+    "icon": "🏢",
+    "colors": [
+      "#0f766e",
+      "#5eead4"
+    ],
+    "image": "/assets/work/arzaq-cover.webp",
+    "industry": {
+      "en": "Real estate",
+      "ar": "عقارات"
+    },
+    "desc": {
+      "en": "Kuwait real-estate company — sales, rentals and property management.",
+      "ar": "شركة عقارية كويتية — بيع وإيجار وإدارة أملاك."
+    }
+  },
+  {
+    "hidden": false,
+    "id": "wefaq",
+    "slug": "wefaq-law",
+    "name": "Wefaq",
+    "tags": [
+      "web"
+    ],
+    "icon": "⚖️",
+    "colors": [
+      "#9f1239",
+      "#f59e0b"
+    ],
+    "image": "/assets/work/wefaq-home.png",
+    "pos": "25% 40%",
+    "industry": {
+      "en": "Law firm",
+      "ar": "محاماة"
+    },
+    "desc": {
+      "en": "Comprehensive legal partner — advisory, litigation, and cross-border transactions.",
+      "ar": "شريك قانوني متكامل — استشارات وتقاضٍ ومعاملات عابرة للحدود."
+    }
+  },
+  {
+    "hidden": false,
+    "id": "lumenpro",
+    "slug": "lumen-pro",
+    "name": "LumenPro",
+    "tags": [
+      "ai",
+      "web",
+      "app"
+    ],
+    "icon": "📸",
+    "colors": [
+      "#7c3aed",
+      "#f472b6"
+    ],
+    "image": "img/lumenpro.jpg",
+    "fit": "contain",
+    "bg": "#0e0d12",
+    "pos": "78% 45%",
+    "industry": {
+      "en": "AI creative",
+      "ar": "إبداع بالذكاء الاصطناعي"
+    },
+    "desc": {
+      "en": "Arabic-first AI creative platform — product photography, video, and 32+ tools for merchants across the Gulf.",
+      "ar": "منصة إبداعية بالذكاء الاصطناعي بالعربية أولاً — تصوير منتجات وفيديو وأكثر من 32 أداة للتجار في الخليج."
+    }
+  }
+]

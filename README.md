@@ -65,3 +65,11 @@ The start screen has a 🏆 **Project leaderboard** button, and every results sc
 Points: 👑 champion 10 · ⭐ super like 5 · ⚔️ battle win 3 · 💚 like 2. Rows with status `test` or a name containing `zz-test` are skipped.
 The sheet script sends back **totals only**; player names and contacts never leave the sheet. Totals are cached for 60 seconds and refresh as soon as a game finishes.
 After changing `google-sheet-script.gs`, redeploy it as a **new version** (Deploy → Manage deployments → ✏️ → Version: New version → Deploy). That keeps the same link.
+
+## Control panel (edit projects without code)
+Projects live in `projects.json`. To edit them, open the control panel on this Mac:
+1. Double-click `../admin/start-admin.command` (or run `python3 ../admin/server.py`). It opens http://localhost:8787.
+2. Edit name, descriptions (EN/AR), industry, tags, case-study link and colours; **upload images** (drag & drop); **show/hide** projects; reorder; add or delete. Changes save automatically.
+3. **▶ Preview game** plays your saved changes locally (nothing is recorded in the sheet).
+4. **🚀 Publish to live site** commits `projects.json` + `img/` and pushes to GitHub; the live site updates in about a minute.
+The panel only listens on this Mac (127.0.0.1) and is not part of the published site.
