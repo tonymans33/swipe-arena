@@ -6,7 +6,7 @@
  * WhatsApp thank-you (UChat): when a game finishes and the player gave a phone number, a WhatsApp
  * template message is sent once per game. Set these in Project Settings → Script Properties:
  *   UCHAT_API_KEY      your UChat API key (never put it in this code)
- *   UCHAT_TEMPLATE     the approved template's name in UChat
+ *   UCHAT_TEMPLATE     (optional) template name — default: nexus_pickchamp_thanks
  *   UCHAT_TEMPLATE_LANG  (optional) e.g. ar or en, if the template exists in several languages
  *   UCHAT_HEADER_IMAGE   (optional) header image URL; default: the PickChamp banner
  * Template variables: {{1}} = player's first name, {{2}} = their champion (or favourite project).
@@ -16,6 +16,7 @@ const SHEET_NAME = 'Plays';
 const HEADERS = ['Session', 'Started', 'Updated', 'Name', 'Phone', 'Email', 'Language', 'Modes',
   'Status', 'Champion', 'Ranking', 'Liked', 'Passed', 'Picks', 'Kiosk', 'Device', 'Score', 'Super liked', 'Badges', 'WhatsApp'];
 const UCHAT = 'https://www.uchat.com.au/api';
+const DEFAULT_TEMPLATE = 'nexus_pickchamp_thanks';
 const DEFAULT_HEADER_IMAGE = 'https://pickchamp.websight.kw/og-image.jpg';
 
 function doPost(e) {
@@ -192,8 +193,7 @@ function findOrCreateSubscriber_(phone, name, email) {
 // the template's namespace, language, number of {{n}} variables and header type (cached 6 h)
 function templateInfo_() {
   const props = PropertiesService.getScriptProperties();
-  const name = props.getProperty('UCHAT_TEMPLATE');
-  if (!name) throw new Error('UCHAT_TEMPLATE is not set in Script Properties');
+  const name = props.getProperty('UCHAT_TEMPLATE') || DEFAULT_TEMPLATE;
   const lang = props.getProperty('UCHAT_TEMPLATE_LANG') || '';
   const cache = CacheService.getScriptCache(), ck = 'tpl:' + name + ':' + lang;
   const hit = cache.get(ck);
