@@ -95,7 +95,9 @@
     "desc": {
       "en": "Delivery operations platform — group orders, digital wallets and payments.",
       "ar": "منصة عمليات توصيل — طلبات جماعية ومحافظ رقمية ومدفوعات."
-    }
+    },
+    "fit": "contain",
+    "bg": "#ffffff"
   },
   {
     "hidden": false,
@@ -112,7 +114,6 @@
       "#ff4fd8"
     ],
     "image": "img/live.jpg",
-    "fit": "contain",
     "bg": "#f6f5fd",
     "pos": "88% 50%",
     "logo": "/assets/partners/live.svg",
@@ -123,7 +124,8 @@
     "desc": {
       "en": "Design healthier spaces, shop products and connect with experts.",
       "ar": "صمّم مساحات أصح، تسوّق المنتجات وتواصل مع الخبراء."
-    }
+    },
+    "fit": "contain"
   },
   {
     "hidden": false,
@@ -222,7 +224,9 @@
     "desc": {
       "en": "Comprehensive legal partner — advisory, litigation, and cross-border transactions.",
       "ar": "شريك قانوني متكامل — استشارات وتقاضٍ ومعاملات عابرة للحدود."
-    }
+    },
+    "fit": "contain",
+    "bg": "#ffffff"
   },
   {
     "hidden": false,
@@ -240,7 +244,6 @@
       "#f472b6"
     ],
     "image": "img/lumenpro.jpg",
-    "fit": "contain",
     "bg": "#0e0d12",
     "pos": "78% 45%",
     "industry": {
@@ -250,7 +253,8 @@
     "desc": {
       "en": "Arabic-first AI creative platform — product photography, video, and 32+ tools for merchants across the Gulf.",
       "ar": "منصة إبداعية بالذكاء الاصطناعي بالعربية أولاً — تصوير منتجات وفيديو وأكثر من 32 أداة للتجار في الخليج."
-    }
+    },
+    "fit": "contain"
   },
   {
     "hidden": false,
@@ -266,7 +270,7 @@
       "#6366f1",
       "#f472b6"
     ],
-    "image": "img/pmww249b6-1795607164.jpg",
+    "image": "img/pmww249b6-1795610857.jpg",
     "industry": {
       "en": "Booking System",
       "ar": ""
@@ -327,8 +331,8 @@
       "en": "Open the door to the cozy workspace of your dreams with our expertise in creating exquisite interiors that are comfortable to work in.",
       "ar": ""
     },
-    "fit": "contain",
-    "bg": "#ffffff"
+    "bg": "#ffffff",
+    "fit": "contain"
   },
   {
     "hidden": false,
