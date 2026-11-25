@@ -48,7 +48,7 @@ The 10 cards are real Websight case studies: AQL, KIB Mubader, ILG, Riders, LIVE
 Battle works with any number of projects. Above 8 (or any power of two), a short **Play-in** round runs first, then a clean Quarter-final.
 
 ## Other settings (`CONFIG`)
-`REQUIRE_CONTACT: true` makes a phone number or email mandatory. You can also change the WhatsApp number, the site URL and the kiosk timers there. The Websight logo is built into the page, so it shows even when offline.
+`REQUIRE_CONTACT` is **on**: players must enter a phone number or an email (either one). Set it to `false` to make both optional. You can also change the WhatsApp number, the site URL and the kiosk timers there. The Websight logo is built into the page, so it shows even when offline.
 
 ## Event QR poster
 Open `qr-poster.html` in a browser. It is an A4 poster in the game's style, with buttons for **Print / Save PDF**, **QR as PNG** (2000 px) and **QR as SVG**.
