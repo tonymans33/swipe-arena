@@ -476,7 +476,6 @@ html[lang=ar] .pod b{text-transform:none}
         <label class="inp"><span>✉️</span>
           <input id="fEmail" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" dir="ltr" enterkeyhint="done" maxlength="120" data-i18n-ph="email"></label>
         <p class="chint" data-i18n="contactHint" hidden></p>
-        <button type="button" class="link" id="pickContact" hidden>📇 <span data-i18n="fromContacts"></span></button>
         <p class="err" id="err" role="alert"></p>
         <div class="modes" role="radiogroup">
           <button type="button" class="mode battle on" data-mode="battle" role="radio" aria-checked="true">
@@ -562,7 +561,7 @@ let PROJECTS = [];
 
 const T = {
   en:{ langBtn:'عربي', title1:'Pick', title2:'Champ', byline:'by Websight · Kuwait', player1:'Player 1',
-    name:'Your name', phone:'Phone number', email:'Email', contactHint:'Phone or email: at least one is needed so we can reach you', fromContacts:'Fill from my contacts',
+    name:'Your name', phone:'Phone number', email:'Email', contactHint:'Phone or email: at least one is needed so we can reach you',
     battle:'Battle', battleDesc:'This or that till one wins', swipe:'Swipe', swipeDesc:'Like or pass each app',
     start:'Play', privacy:"We'll only use your details to follow up about your picks.",
     errName:'Enter your name to play!', errContact:'Add a phone number or an email', errPhone:'That phone number looks too short', errEmail:"That email doesn't look right",
@@ -586,7 +585,7 @@ const T = {
     tapToView:'Tap a project to see it on our website', viewOn:'See {x} on websight.kw', madeBy:'Made by Websight',
     tag_web:'Website', tag_app:'Mobile App', tag_system:'Custom System', tag_ai:'AI', tag_shop:'E-commerce' },
   ar:{ langBtn:'English', title1:'اختار', title2:'بطلك', byline:'من ويب سايت · الكويت', player1:'اللاعب ١',
-    name:'اسمك', phone:'رقم الهاتف', email:'البريد الإلكتروني', contactHint:'رقم الهاتف أو البريد الإلكتروني: أحدهما مطلوب للتواصل معك', fromContacts:'املأ من جهات الاتصال',
+    name:'اسمك', phone:'رقم الهاتف', email:'البريد الإلكتروني', contactHint:'رقم الهاتف أو البريد الإلكتروني: أحدهما مطلوب للتواصل معك',
     battle:'تحدّي', battleDesc:'هذا أو ذاك حتى يفوز واحد', swipe:'سحب', swipeDesc:'إعجاب أو تخطٍّ لكل تطبيق',
     start:'العب', privacy:'نستخدم بياناتك فقط للتواصل معك بخصوص اختياراتك.',
     errName:'اكتب اسمك لتبدأ!', errContact:'أضف رقم هاتف أو بريدًا إلكترونيًا', errPhone:'رقم الهاتف يبدو قصيرًا', errEmail:'البريد الإلكتروني غير صحيح',
@@ -1077,21 +1076,6 @@ function setupWelcome(){
     $$('.mode').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-checked', x === b); });
     Sfx.tap(); vib(8);
   });
-
-  // Android Chrome: native contact picker. iOS Safari has none — autocomplete attributes give one-tap autofill instead.
-  const pick = $('#pickContact');
-  if (!KIOSK && 'contacts' in navigator && 'select' in navigator.contacts) {
-    pick.hidden = false;
-    pick.onclick = async () => {
-      try {
-        const [c] = await navigator.contacts.select(['name','tel','email'], {multiple:false});
-        if (!c) return;
-        if (c.name?.[0]) $('#fName').value = c.name[0];
-        if (c.tel?.[0]) showPhone(c.tel[0]);
-        if (c.email?.[0]) $('#fEmail').value = c.email[0];
-      } catch {}
-    };
-  }
 
   if (!KIOSK) {
     const saved = store.get('ws_player');
