@@ -165,6 +165,9 @@ function uchat_(method, path, payload) {
   let json = {};
   try { json = JSON.parse(text); } catch (e) {}
   if (code >= 300) throw new Error('UChat ' + path + ' → ' + code + ' ' + (json.message || text).slice(0, 140));
+  // UChat can answer 200 but still report a problem in the body
+  if (json && json.status && String(json.status).toLowerCase() !== 'ok' && String(json.status).toLowerCase() !== 'success')
+    throw new Error('UChat ' + path + ' → ' + (json.message || JSON.stringify(json)).slice(0, 160));
   return json;
 }
 
@@ -231,11 +234,11 @@ function sendThanks_(d) {
   for (let n = 1; n <= tpl.vars; n++) params['BODY_{{' + n + '}}'] = values[n - 1] || '-';
   if (tpl.imageHeader) params.HEADER_IMAGE = PropertiesService.getScriptProperties().getProperty('UCHAT_HEADER_IMAGE') || DEFAULT_HEADER_IMAGE;
   const userNs = findOrCreateSubscriber_(phone, d.name, d.email);
-  uchat_('post', '/subscriber/send-whatsapp-template', {
+  const sent = uchat_('post', '/subscriber/send-whatsapp-template', {
     user_ns: userNs,
     content: { namespace: tpl.namespace, name: tpl.name, lang: tpl.lang, params: params },
   });
-  return phone;
+  return phone + (sent && sent.mid ? ' · id ' + sent.mid : '');
 }
 
 // Run this from the Apps Script editor (select testWhatsApp → Run) after changing the number to yours.
