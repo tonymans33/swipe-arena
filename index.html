@@ -292,7 +292,8 @@ html[lang=ar] .kick{letter-spacing:0}
 .vs b{position:relative;font-size:38px;font-weight:800;color:#fff;letter-spacing:.02em;text-shadow:0 3px 0 var(--pink-d),-2px -2px 0 var(--ink),2px -2px 0 var(--ink),-2px 2px 0 var(--ink),2px 2px 0 var(--ink);animation:vsPulse 1s ease-in-out infinite}
 @keyframes vsPulse{50%{transform:scale(1.15) rotate(-6deg)}}
 @media (min-width:700px) and (min-aspect-ratio:1/1){
-  .arena{max-width:960px;grid-template-rows:1fr;grid-template-columns:1fr 1fr;gap:40px;max-height:640px;margin:auto}
+  /* give the cards a real height on wide screens (margin:auto used to shrink them to just their text) */
+  .arena{max-width:960px;grid-template-rows:1fr;grid-template-columns:1fr 1fr;gap:40px;height:min(600px,100%);align-self:center;margin:0 auto}
   .duel .plate{padding:10px 16px 12px}
   .duel .plate h3{font-size:28px}
   .duel .plate p{font-size:15px;-webkit-line-clamp:2}
