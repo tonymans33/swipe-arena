@@ -1,6 +1,6 @@
 [
   {
-    "hidden": false,
+    "hidden": true,
     "id": "aql",
     "slug": "aql",
     "name": "AQL",
@@ -23,7 +23,7 @@
     }
   },
   {
-    "hidden": false,
+    "hidden": true,
     "id": "kib",
     "slug": "kib-mubader",
     "name": "KIB Mubader",
@@ -60,7 +60,7 @@
       "#ff8a00",
       "#ffd23f"
     ],
-    "image": "/assets/work/ilg-cover.webp",
+    "image": "img/ilg-1795606957.jpg",
     "industry": {
       "en": "Law firm",
       "ar": "محاماة"
@@ -178,7 +178,7 @@
     }
   },
   {
-    "hidden": false,
+    "hidden": true,
     "id": "arzaq",
     "slug": "arzaq",
     "name": "Arzaq",
@@ -250,6 +250,57 @@
     "desc": {
       "en": "Arabic-first AI creative platform — product photography, video, and 32+ tools for merchants across the Gulf.",
       "ar": "منصة إبداعية بالذكاء الاصطناعي بالعربية أولاً — تصوير منتجات وفيديو وأكثر من 32 أداة للتجار في الخليج."
+    }
+  },
+  {
+    "hidden": false,
+    "id": "pmww249b6",
+    "slug": "nomo",
+    "name": "NOMO",
+    "tags": [
+      "web",
+      "system"
+    ],
+    "icon": "✨",
+    "colors": [
+      "#6366f1",
+      "#f472b6"
+    ],
+    "image": "img/pmww249b6-1795607164.jpg",
+    "industry": {
+      "en": "Booking System",
+      "ar": ""
+    },
+    "desc": {
+      "en": "Financial consulting, training, and courses — from Kuwait for anyone ready to grow\n\n",
+      "ar": "نمو شركة كويتية للاستشارات المالية والإدارية والتدريب والدورات. نبدأ من وضعك اليوم ونطلعك درجة درجة.\n\n"
+    },
+    "bg": "#ffffff",
+    "fit": "contain"
+  },
+  {
+    "hidden": false,
+    "id": "pmww26cya",
+    "slug": "vp-valet-parking",
+    "name": "VP Valet Parking",
+    "tags": [
+      "web",
+      "system",
+      "ai"
+    ],
+    "icon": "✨",
+    "colors": [
+      "#6366f1",
+      "#f472b6"
+    ],
+    "image": "img/pmww26cya-1795607279.jpg",
+    "industry": {
+      "en": "",
+      "ar": ""
+    },
+    "desc": {
+      "en": "Fully digital valet parking — SMS, QR, and mobile app car retrieval\n\n",
+      "ar": "Fully digital valet parking — SMS, QR, and mobile app car retrieval\n\n"
     }
   }
 ]
